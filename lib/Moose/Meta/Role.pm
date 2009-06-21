@@ -491,6 +491,11 @@ sub apply {
     }
 }
 
+sub _application_hook {
+    my ($self, $application) = @_;
+    return $application;
+}
+
 sub combine {
     my ($class, @role_specs) = @_;
 

@@ -2,6 +2,8 @@ package Moose::Meta::Role::Application;
 
 use strict;
 use warnings;
+use Scalar::Util qw/blessed/;
+
 use metaclass;
 
 our $VERSION   = '0.81';
@@ -55,6 +57,8 @@ sub is_aliased_method {
 sub apply {
     my $self = shift;
 
+    $self = $self->_mangle_application_from_roles_to_apply(@_);
+
     $self->check_role_exclusions(@_);
     $self->check_required_methods(@_);
     $self->check_required_attributes(@_);
@@ -67,6 +71,15 @@ sub apply {
     $self->apply_before_method_modifiers(@_);
     $self->apply_around_method_modifiers(@_);
     $self->apply_after_method_modifiers(@_);
+}
+
+sub _mangle_application_from_roles_to_apply {
+    my $self = shift;
+    my @roles = grep { blessed($_) and $_->isa('Moose::Meta::Role') } @_;
+    foreach my $role (@roles) {
+        $self = $role->_application_hook($self);
+    }
+    return $self;
 }
 
 sub check_role_exclusions           { Carp::croak "Abstract Method" }
