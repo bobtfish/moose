@@ -42,7 +42,11 @@ sub new {
     # and the name is created from the
     # roles if one has not been provided
     $params{name} ||= (join "|" => map { $_->name } @{$params{roles}});
-    $class->_new(\%params);
+    my $self = $class->_new(\%params);
+    foreach my $role ( @{$params{roles}} ) {
+        $self = $role->_application_hook($self);
+    }
+    return $self;
 }
 
 # This is largely a cope of what's in Moose::Meta::Role (itself
