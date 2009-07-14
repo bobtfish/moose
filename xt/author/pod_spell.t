@@ -104,6 +104,7 @@ PosInt
 PositiveInt
 ro
 rw
+RoleSummation
 Str
 TypeContraints
 
