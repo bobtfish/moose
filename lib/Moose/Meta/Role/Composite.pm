@@ -111,6 +111,8 @@ sub apply_params {
 
 sub reinitialize {
     my ($class, $old_meta, @args) = @_;
+    confess 'Moose::Meta::Role::Composite instances can only be reinitialized from an existing metaclass instance'
+        unless blessed $old_meta;
     return $old_meta->meta->clone_object($old_meta, @args);
 }
 
