@@ -56,6 +56,7 @@ sub _make_new_metaclass {
             application_to_class_class
             application_to_role_class
             application_to_instance_class
+            application_role_summation_class
     );
 
     my $new_metaclass
@@ -74,6 +75,7 @@ sub _make_new_metaclass {
         application_to_class_class
         application_to_role_class
         application_to_instance_class
+        application_role_summation_class
     );
 
     return $new_metaclass->reinitialize( $for, %classes );
