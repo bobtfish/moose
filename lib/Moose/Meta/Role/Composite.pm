@@ -109,6 +109,11 @@ sub apply_params {
     return $self;
 }
 
+sub reinitialize {
+    my ($class, $old_meta, @args) = @_;
+    return $old_meta->meta->clone_object($old_meta, @args);
+}
+
 1;
 
 __END__
