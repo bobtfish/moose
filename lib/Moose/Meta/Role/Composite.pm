@@ -109,6 +109,13 @@ sub apply_params {
     return $self;
 }
 
+sub reinitialize {
+    my ($class, $old_meta, @args) = @_;
+    Moose->throw_error('Moose::Meta::Role::Composite instances can only be reinitialized from an existing metaclass instance')
+        if !blessed $old_meta || !$old_meta->isa('Moose::Meta::Role::Composite');
+    return $old_meta->meta->clone_object($old_meta, @args);
+}
+
 1;
 
 __END__
@@ -154,6 +161,11 @@ If a name is not given, one is generated from the roles provided.
 
 Creates a new RoleSummation role application with C<%role_params> and applies
 the composite role to it.
+
+=item * reinitialize($metaclass)
+
+Like C<< Class::MOP::Package->reinitialize >>, but doesn't allow passing a
+string with the package name, as there is no real package for composite roles.
 
 =back
 
