@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use metaclass;
 
-use Carp 'confess';
 use Scalar::Util 'blessed';
 
 our $VERSION   = '0.87';
@@ -112,7 +111,7 @@ sub apply_params {
 
 sub reinitialize {
     my ($class, $old_meta, @args) = @_;
-    confess 'Moose::Meta::Role::Composite instances can only be reinitialized from an existing metaclass instance'
+    Moose->throw_error('Moose::Meta::Role::Composite instances can only be reinitialized from an existing metaclass instance')
         if !blessed $old_meta || !$old_meta->isa('Moose::Meta::Role::Composite');
     return $old_meta->meta->clone_object($old_meta, @args);
 }
