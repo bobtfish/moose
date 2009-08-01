@@ -1,23 +1,39 @@
 Also see Moose::Manual::Delta for more details of, and workarounds
 for, noteworthy changes.
 
-    * Moose::Meta::Role
-      - Create metaclass attributes for the different role application classes.
-        (rafl)
-    * Moose::Util::MetaRole
-      - Allow applying roles to a meta role's role application classes. (rafl)
+next version
+    * Moose::Manual::Attributes
+      - Clarify "is", include discussion of "bare". (Sartak)
 
-0.88
+    * Moose::Meta::Role::Method::Conflicting
+    * Moose::Meta::Role::Application::ToClass
+      - For the first set of roles involved in a conflict, report all
+        unresolved method conflicts, not just the first method. Fixes #47210
+        reported by Ovid. (Sartak)
+
+0.88 Fri Jul 24, 2009
+    * Moose::Manual::Contributing
+      - Re-write the Moose::Manual::Contributing document to reflect
+        the new layout and methods of work for the Git repository. All
+        work now should be done in topic branches and reviewed by a
+        core committer before being applied to master. All releases
+        are done by a cabal member and merged from master to
+        stable. This plan was devised by Yuval, blame him. (perigrin)
+
+    * Moose::Meta::Role
+      - Create metaclass attributes for the different role application
+        classes.  (rafl)
+
+    * Moose::Util::MetaRole
+      - Allow applying roles to a meta role's role application
+        classes. (rafl)
+
+    * Moose::Meta::Attribute
+      - Add weak_ref to allowed options for "has '+foo'" (mst)
+
     * Moose::Meta::Method::Accessor
       - No longer uses inline_slot_access in accessors, to support
-        non-lvalue-based meta instances.
-    * Moose::Manual::Contributing
-      - Re-write the Moose::Manual::Contributing document to reflect the new
-        layout and methods of work for the Git repository. All work now should
-        be done in topic branches and reviewed by a core committer before
-        being applied to master. All releases are done by a cabal member and
-        merged from master to stable. This plan was devised by Yuval, blame
-        him. (perigrin)
+        non-lvalue-based meta instances. (sorear)
 
 0.87 Tue Jul 7, 2009
     * Moose::Meta::Method::Delegation

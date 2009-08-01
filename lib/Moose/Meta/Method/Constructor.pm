@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util 'blessed', 'weaken', 'looks_like_number', 'refaddr';
 
-our $VERSION   = '0.87';
+our $VERSION   = '0.88';
 our $AUTHORITY = 'cpan:STEVAN';
 
 use base 'Moose::Meta::Method',
@@ -374,29 +374,6 @@ L<Class::MOP::Class::Constructor> documentation as well.
 
 C<Moose::Meta::Method::Constructor> is a subclass of
 L<Moose::Meta::Method> I<and> L<Class::MOP::Method::Constructor>.
-
-=head1 METHODS
-
-=over 4
-
-=item B<< $metamethod->can_be_inlined >>
-
-This returns true if the method can inlined.
-
-First, it looks at all of the parents of the associated class. If any
-of them have an inlined constructor, then the constructor can be
-inlined.
-
-If none of them have been inlined, it checks to make sure that the
-pre-inlining constructor for the class matches the constructor from
-the expected class.
-
-By default, it expects this constructor come from L<Moose::Object>,
-but subclasses can change this expectation.
-
-If the constructor cannot be inlined it warns that this is the case.
-
-=back
 
 =head1 AUTHORS
 

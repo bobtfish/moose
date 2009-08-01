@@ -8,7 +8,7 @@ use Sub::Exporter;
 use Scalar::Util 'blessed';
 use Class::MOP   0.60;
 
-our $VERSION   = '0.87';
+our $VERSION   = '0.88';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -79,7 +79,7 @@ sub ensure_all_roles {
 
 sub apply_all_roles {
     my $applicant = shift;
-    _apply_all_roles($applicant, sub { 1 }, @_);
+    _apply_all_roles($applicant, undef, @_);
 }
 
 sub _apply_all_roles {
@@ -105,7 +105,9 @@ sub _apply_all_roles {
         }
     }
 
-    @$roles = grep { local $_ = $_->[0]; $role_filter->() } @$roles;
+    if ( defined $role_filter ) {
+        @$roles = grep { local $_ = $_->[0]; $role_filter->() } @$roles;
+    }
 
     return unless @$roles;
 
