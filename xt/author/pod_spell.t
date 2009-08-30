@@ -94,6 +94,7 @@ metadata
 MetaObject
 metaprogrammer
 metarole
+metatraits
 mixins
 MooseX
 Num
@@ -103,6 +104,7 @@ PosInt
 PositiveInt
 ro
 rw
+RoleSummation
 Str
 TypeContraints
 
@@ -171,6 +173,7 @@ UNIMPORTING
 Unported
 unsets
 unsettable
+utils
 whitelist
 Whitelist
 workflow

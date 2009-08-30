@@ -7,7 +7,7 @@ use Carp         'croak';
 
 use Sub::Exporter;
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -193,6 +193,9 @@ Moose::Role also offers two role-specific keyword exports:
 Roles can require that certain methods are implemented by any class which
 C<does> the role.
 
+Note that attribute accessors also count as methods for the purposes
+of satisfying the requirements of a role.
+
 =item B<excludes (@role_names)>
 
 Roles can C<exclude> other roles, in effect saying "I can never be combined
@@ -228,7 +231,8 @@ You can also specify traits which will be applied to your role metaclass:
 
 This is very similar to the attribute traits feature. When you do
 this, your class's C<meta> object will have the specified traits
-applied to it. See L<Moose/Trait Name Resolution> for more details.
+applied to it. See L<Moose/Metaclass and Trait Name Resolution> for more
+details.
 
 =head1 CAVEATS
 

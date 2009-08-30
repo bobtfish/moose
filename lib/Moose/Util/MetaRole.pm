@@ -2,8 +2,9 @@ package Moose::Util::MetaRole;
 
 use strict;
 use warnings;
+use Scalar::Util 'blessed';
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -14,8 +15,8 @@ my @Classes = qw( constructor_class destructor_class error_class );
 sub apply_metaclass_roles {
     my %options = @_;
 
-    my $for = exists $options{for}
-        ? $options{for}
+    my $for = blessed $options{for_class}
+        ? $options{for_class}
         : Class::MOP::class_of($options{for_class});
 
     my %old_classes = map { $_ => $for->$_ }
@@ -108,7 +109,8 @@ sub _make_new_class {
     my $meta = Class::MOP::Class->initialize($existing_class);
 
     return $existing_class
-        if $meta->can('does_role') && all { $meta->does_role($_) } @{$roles};
+        if $meta->can('does_role') && all  { $meta->does_role($_) }
+                                      grep { !ref $_ } @{$roles};
 
     return Moose::Meta::Class->create_anon_class(
         superclasses => $superclasses,

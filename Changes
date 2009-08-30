@@ -1,7 +1,11 @@
 Also see Moose::Manual::Delta for more details of, and workarounds
 for, noteworthy changes.
 
-next version
+    * Moose::Error::Croak
+    * Moose::Error::Confess
+      - Clarify documentation on how to use. (Curtis Jewell)
+
+0.89 Thu Aug 13, 2009
     * Moose::Manual::Attributes
       - Clarify "is", include discussion of "bare". (Sartak)
 
@@ -10,6 +14,35 @@ next version
       - For the first set of roles involved in a conflict, report all
         unresolved method conflicts, not just the first method. Fixes #47210
         reported by Ovid. (Sartak)
+
+    * Moose::Meta::TypeConstraint
+      - Add assert_valid method to use a TypeConstraint for assertion (rjbs)
+
+    * Moose::Exporter
+      - Make "use Moose -metaclass => 'Foo'" do alias resolution, like -traits
+        does. (doy)
+      - Allow specifying role options (alias, excludes, MXRP stuff) in the
+        arrayref passed to "use Moose -traits" (doy)
+
+    * Moose::Util
+      - Add functions meta_class_alias and meta_attribute_alias for creating
+        aliases for class and attribute metaclasses and metatraits. (doy)
+
+    * Moose::Meta::Attribute
+    * Moose::Meta::Method::Accessor
+      - A trigger now receives the old value as a second argument, if the
+        attribute had one. (Dave Rolsky)
+
+    * Moose::Meta::Method::Constructor
+      - Fix a bug with $obj->new when $obj has stringify overloading.
+        Reported by Andrew Suffield [rt.cpan.org #47882] (Sartak)
+        - However, we will probably deprecate $obj->new, so please don't start
+          using it for new code!
+
+    * Moose::Meta::Role::Application
+    * Moose::Meta::Role::Application::RoleSummation
+      - Rename alias and excludes to -alias and -excludes (but keep the old
+        names for now, for backcompat) (doy)
 
 0.88 Fri Jul 24, 2009
     * Moose::Manual::Contributing

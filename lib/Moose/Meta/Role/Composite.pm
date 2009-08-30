@@ -6,7 +6,7 @@ use metaclass;
 
 use Scalar::Util 'blessed';
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -161,6 +161,11 @@ If a name is not given, one is generated from the roles provided.
 
 Creates a new RoleSummation role application with C<%role_params> and applies
 the composite role to it.
+
+=item * reinitialize($metaclass)
+
+Like C<< Class::MOP::Package->reinitialize >>, but doesn't allow passing a
+string with the package name, as there is no real package for composite roles.
 
 =back
 

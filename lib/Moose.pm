@@ -4,7 +4,7 @@ use warnings;
 
 use 5.008;
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -13,7 +13,7 @@ use Carp         'confess';
 
 use Moose::Exporter;
 
-use Class::MOP 0.89;
+use Class::MOP 0.92;
 
 use Moose::Meta::Class;
 use Moose::Meta::TypeConstraint;
@@ -457,8 +457,10 @@ This is only legal if your C<isa> option is either C<ArrayRef> or C<HashRef>.
 
 The I<trigger> option is a CODE reference which will be called after
 the value of the attribute is set. The CODE ref will be passed the
-instance itself and the updated value. You B<can> have a trigger on
-a read-only attribute.
+instance itself and the updated value. If the attribute already had a
+value, this will be passed as the third value to the trigger.
+
+You B<can> have a trigger on a read-only attribute.
 
 B<NOTE:> Triggers will only fire when you B<assign> to the attribute,
 either in the constructor, or using the writer. Default and built values will
@@ -585,13 +587,8 @@ capabilities of the I<has> keyword: they are the simplest way to extend the MOP,
 but they are still a fairly advanced topic and too much to cover here, see
 L<Moose::Cookbook::Meta::Recipe1> for more information.
 
-The default behavior here is to just load C<$metaclass_name>; however, we also
-have a way to alias to a shorter name. This will first look to see if
-B<Moose::Meta::Attribute::Custom::$metaclass_name> exists. If it does, Moose
-will then check to see if that has the method C<register_implementation>, which
-should return the actual name of the custom attribute metaclass. If there is no
-C<register_implementation> method, it will fall back to using
-B<Moose::Meta::Attribute::Custom::$metaclass_name> as the metaclass name.
+See L<Metaclass and Trait Name Resolution> for details on how a metaclass name
+is resolved to a class name.
 
 =item I<traits =E<gt> [ @role_names ]>
 
@@ -599,8 +596,8 @@ This tells Moose to take the list of C<@role_names> and apply them to the
 attribute meta-object. This is very similar to the I<metaclass> option, but
 allows you to use more than one extension at a time.
 
-See L<Trait Name Resolution> for details on how a trait name is
-resolved to a class name.
+See L<Metaclass and Trait Name Resolution> for details on how a trait name is
+resolved to a role name.
 
 Also see L<Moose::Cookbook::Meta::Recipe3> for a metaclass trait
 example.
@@ -777,8 +774,8 @@ B<are not> overridden, or removed.
 
 These three items are syntactic sugar for the before, after, and around method
 modifier features that L<Class::MOP> provides. More information on these may be
-found in the L<Class::MOP::Class documentation|Class::MOP::Class/"Method
-Modifiers"> for now.
+found in L<Moose::Manual::MethodModifiers> and the
+L<Class::MOP::Class documentation|Class::MOP::Class/"Method Modifiers">.
 
 =item B<super>
 
@@ -831,9 +828,10 @@ You can also specify traits which will be applied to your metaclass:
 
 This is very similar to the attribute traits feature. When you do
 this, your class's C<meta> object will have the specified traits
-applied to it. See L<Trait Name Resolution> for more details.
+applied to it. See L<Metaclass and Trait Name Resolution> for more
+details.
 
-=head2 Trait Name Resolution
+=head2 Metaclass and Trait Name Resolution
 
 By default, when given a trait name, Moose simply tries to load a
 class of the same name. If such a class does not exist, it then looks
@@ -847,6 +845,9 @@ the method C<register_implementation>. This method is expected to
 return the I<real> class name of the trait. If there is no
 C<register_implementation> method, it will fall back to using
 B<Moose::Meta::$type::Custom::Trait::$trait> as the trait name.
+
+The lookup method for metaclasses is the same, except that it looks
+for a class matching B<Moose::Meta::$type::Custom::$metaclass_name>.
 
 If all this is confusing, take a look at
 L<Moose::Cookbook::Meta::Recipe3>, which demonstrates how to create an

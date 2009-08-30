@@ -3,7 +3,7 @@ package Moose::Exporter;
 use strict;
 use warnings;
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -369,6 +369,9 @@ sub _make_import_sub {
 
         my $metaclass;
         ( $metaclass, @_ ) = _strip_metaclass(@_);
+        $metaclass = Moose::Util::resolve_metaclass_alias(
+            'Class' => $metaclass
+        ) if defined $metaclass && length $metaclass;
 
         # Normally we could look at $_[0], but in some weird cases
         # (involving goto &Moose::import), $_[0] ends as something
@@ -461,7 +464,9 @@ sub _apply_meta_traits {
         . ref $meta );
 
     my @resolved_traits
-        = map { Moose::Util::resolve_metatrait_alias( $type => $_ ) }
+        = map {
+            ref $_ ? $_ : Moose::Util::resolve_metatrait_alias( $type => $_ )
+        }
         @$traits;
 
     return unless @resolved_traits;

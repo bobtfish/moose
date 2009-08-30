@@ -3,7 +3,7 @@ package Moose::Error::Confess;
 use strict;
 use warnings;
 
-our $VERSION   = '0.88';
+our $VERSION   = '0.89';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -21,10 +21,13 @@ Moose::Error::Confess - Prefer C<confess>
 
 =head1 SYNOPSIS
 
-	use metaclass => (
-        metaclass => "Moose::Meta::Class",
-        error_class => "Moose::Error::Confess",
+    # Metaclass definition must come before Moose is used.
+    use metaclass (
+        metaclass => 'Moose::Meta::Class',
+        error_class => 'Moose::Error::Confess',
     );
+    use Moose;
+    # ...
 
 =head1 DESCRIPTION
 
